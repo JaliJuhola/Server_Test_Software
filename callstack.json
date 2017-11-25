@@ -6,13 +6,13 @@
     "calls": [
         {
             "location": "00.00.00:2222/murmur/moi",
-            "htmlBody": "",
             "recursive": true,
+            "headers": [],
+            "queryStrings":[],
             "recursive_intervall": 5
         },
         {
             "location": "00.00.00:2222/murmur/moi",
-            "htmlBody": "",
             "headers": [],
             "queryStrings":[],
             "recursive": false
