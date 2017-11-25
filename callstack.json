@@ -1,0 +1,21 @@
+{
+    "my_ip": "00.00.00:2222",
+    "run_amount": "1",
+    "output_file": "output.txt",
+    "wait_time": 5,
+    "calls": [
+        {
+            "location": "00.00.00:2222/murmur/moi",
+            "htmlBody": "",
+            "recursive": true,
+            "recursive_intervall": 5
+        },
+        {
+            "location": "00.00.00:2222/murmur/moi",
+            "htmlBody": "",
+            "headers": [],
+            "queryStrings":[],
+            "recursive": false
+        }
+    ]
+}
