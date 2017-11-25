@@ -4,18 +4,18 @@ import threading
 import time
 
 class testClass:
-    outputValues = []
 
-    def runWithThread(command):
+    def runWithThread(command, commands):
         status = True
         while status:
             r = requests.get(command["location"], params=command["queryStrings"], headers=command["headers"])
             if r.status_code == 200:
-                testClass.outputValues.append("Call: " + r.url + " succeed")
+                testClass.writeResult(commands['output_file'], "Call: " + r.url + " succeed" )
                 status = True
                 time.sleep(command['recursive_intervall'])
             else:
-                testClass.outputValues.append("Call: " + r.url+ " failed")
+                testClass.writeResult(commands['output_file'], "Call: " + r.url+ " failed")
+
                 status = False
 
     def execute():
@@ -24,23 +24,20 @@ class testClass:
         while i < commands['run_amount']:
             for call in commands["calls"]:
                 if call["recursive"]:
-                    threading.Thread(target= testClass.runWithThread, args=(call))
+                    threading.Thread(target= testClass.runWithThread, args=(call, commands))
                 else:
                     r = requests.get(call["location"], params=call["queryStrings"], headers=call["headers"])
                     if r.status_code == 200:
-                        testClass.outputValues.append("Call: " + r.url + " succeed")
+                        testClass.writeResult(commands['output_file'], "Call: " + r.url + " succeed" )
                     else:
-                        testClass.outputValues.append("Call: " + r.url+ " failed")
+                        testClass.writeResult(commands['output_file'], "Call: " + r.url + " failed" )
                 time.sleep(commands['wait_time'])
 
         i = i + 1
-        writeResults(commands['output_file'])
-        return testClass.outputValues
-
-    def writeResults(filename):
-        file = open(filename,”w”)
-        for item in outputValues: 
-            file.write(str(item)) 
+        
+    def writeResult(filename, entry):
+        file = open(filename,"a") 
+        file.write(str(entry + "\n")) 
 
 
 

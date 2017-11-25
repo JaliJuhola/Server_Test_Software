@@ -5,14 +5,14 @@
     "wait_time": 5,
     "calls": [
         {
-            "location": "00.00.00:2222/murmur/moi",
+            "location": "http://uta.fi",
             "recursive": true,
             "headers": [],
             "queryStrings":[],
             "recursive_intervall": 5
         },
         {
-            "location": "00.00.00:2222/murmur/moi",
+            "location": "http://uta.fi",
             "headers": [],
             "queryStrings":[],
             "recursive": false
