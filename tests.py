@@ -1,21 +1,21 @@
 import requests
 import json
-import threading
+from threading import Thread
 import time
 
 class testClass:
 
     def runWithThread(command, commands):
         status = True
+        testClass.writeResult(commands['output_file'], "Call: " + "starting recursion")
         while status:
             r = requests.get(command["location"], params=command["queryStrings"], headers=command["headers"])
             if r.status_code == 200:
-                testClass.writeResult(commands['output_file'], "Call: " + r.url + " succeed" )
+                testClass.writeResult(commands['output_file'], "Call: " + r.url + " succeed (thread)" )
                 status = True
                 time.sleep(command['recursive_intervall'])
             else:
-                testClass.writeResult(commands['output_file'], "Call: " + r.url+ " failed")
-
+                testClass.writeResult(commands['output_file'], "Call: " + r.url + " failed (thread)" )
                 status = False
 
     def execute():
@@ -24,7 +24,10 @@ class testClass:
         while i < commands['run_amount']:
             for call in commands["calls"]:
                 if call["recursive"]:
-                    threading.Thread(target= testClass.runWithThread, args=(call, commands))
+                    testClass.writeResult(commands['output_file'], "call was recursive")
+                    t = Thread(target= testClass.runWithThread, args=(call, commands))
+                    t.start()
+
                 else:
                     r = requests.get(call["location"], params=call["queryStrings"], headers=call["headers"])
                     if r.status_code == 200:
@@ -32,8 +35,7 @@ class testClass:
                     else:
                         testClass.writeResult(commands['output_file'], "Call: " + r.url + " failed" )
                 time.sleep(commands['wait_time'])
-
-        i = i + 1
+            i = i + 1
         
     def writeResult(filename, entry):
         file = open(filename,"a") 
