@@ -5,7 +5,7 @@ import time
 
 class testClass:
     outputValues = []
-    
+
     def runWithThread(command):
         status = True
         while status:
@@ -29,6 +29,13 @@ class testClass:
                     testClass.outputValues.append("Call: " + r.url + " succeed")
                 else:
                     testClass.outputValues.append("Call: " + r.url+ " failed")
+        writeResults(commands['output_file'])
+
+    def writeResults(filename):
+        file = open(filename,”w”)
+        for item in outputValues: 
+            file.write(str(item)) 
+
 
 
 
