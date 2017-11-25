@@ -1,6 +1,6 @@
 {
     "my_ip": "00.00.00:2222",
-    "run_amount": "1",
+    "run_amount": 1,
     "output_file": "output.txt",
     "wait_time": 5,
     "calls": [
