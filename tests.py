@@ -7,7 +7,7 @@ class testClass:
 
     def runWithThread(command, commands):
         status = True
-        testClass.writeResult(commands['output_file'], "Call: " + "starting recursion")
+        testClass.writeResult(commands['output_file'], "Call: " + "starting thread")
         while status:
             r = requests.get(command["location"], params=command["queryStrings"], headers=command["headers"])
             if r.status_code == 200:
@@ -24,7 +24,6 @@ class testClass:
         while i < commands['run_amount']:
             for call in commands["calls"]:
                 if call["recursive"]:
-                    testClass.writeResult(commands['output_file'], "call was recursive")
                     t = Thread(target= testClass.runWithThread, args=(call, commands))
                     t.start()
 
